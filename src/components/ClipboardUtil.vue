@@ -84,83 +84,41 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="clipboard-container">
-        <h2>Clipboard History</h2>
-        <div class="clipboard-list">
+    <div class="min-w-[350px] max-h-[500px] bg-white p-4 shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 px-2">Clipboard History</h2>
+        <div class="space-y-2 overflow-y-auto max-h-[440px] px-2">
             <div
                 v-for="(item, index) in clipboardItems"
                 :key="index"
-                class="clipboard-item"
+                class="group bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-200"
             >
-                <div class="item-content" @click="copyToClipboard(item)">
-                <span class="item-text">{{ item }}</span>
-                <span class="item-time">{{ getTimeAgo(index) }}</span>
+                <div class="flex items-center p-3 gap-3">
+                    <div 
+                        class="flex-1 cursor-pointer"
+                        @click="copyToClipboard(item)"
+                    >
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-gray-700 truncate max-w-[230px]">{{ item }}</span>
+                            <span class="text-xs text-gray-500 whitespace-nowrap">{{ getTimeAgo(index) }}</span>
+                        </div>
+                    </div>
+                    <button 
+                        @click="deleteItem(index)"
+                        class="text-gray-400 hover:text-red-500 transition-colors duration-200 p-1"
+                    >
+                        🗑️
+                    </button>
                 </div>
-                <button class="delete-btn" @click="deleteItem(index)">🗑️</button>
+            </div>
+            <div 
+                v-if="clipboardItems.length === 0" 
+                class="text-center py-8 text-gray-500"
+            >
+                No items in clipboard history
             </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-.clipboard-container {
-    width: 300px;
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 16px;
-    background-color: white;
-    color: #333;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.clipboard-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.clipboard-item {
-    padding: 8px;
-    border: 1px solid #e2e2e2;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-}
-
-.clipboard-item:hover {
-    background-color: #f5f5f5;
-}
-
-.item-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-}
-
-.item-time {
-    font-size: 0.8em;
-    color: #666;
-}
-
-.item-content {
-    flex-grow: 1;
-    cursor: pointer;
-}
-
-.delete-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    opacity: 0.6;
-}
-
-.delete-btn:hover {
-    opacity: 1;
-}
 </style>

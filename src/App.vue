@@ -10,18 +10,16 @@ defineComponent({
 </script>
 
 <template>
-  <ClipboardUtil />
+  <div class="bg-gray-50 min-h-screen">
+    <ClipboardUtil />
+  </div>
 </template>
 
 <style>
-html, body {
-    margin: 0;
-    padding: 0;
-    background-color: white;
-}
-
-.app {
-    width: 100%;
-    height: 100%;
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 350px;
+  min-height: 500px;
 }
 </style>
