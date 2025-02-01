@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Clipboard Util",
+    "version": "1.0.0",
+    "description": "Keep track of your clipboard history",
+    "permissions": [
+        "clipboardRead",
+        "storage",
+        "contextMenus"
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "action": {
+        "default_popup": "index.html"
+    }
+}
