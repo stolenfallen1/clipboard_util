@@ -1,11 +1,25 @@
-chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.local.set({ items: [], timestamps: [] });
+chrome.runtime.onInstalled.addListener(async () => {
+    await chrome.storage.local.set({ items: [], timestamps: [] });
 
     chrome.contextMenus.create({
         id: 'copyToClipboard',
         title: 'Copy to Clipboard Util',
         contexts: ['selection'],
     });
+
+    const tabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] });
+    for (const tab of tabs) {
+        if (tab.id) {
+            try {
+                await chrome.scripting.executeScript({
+                    target: { tabId: tab.id },
+                    files: ['content.js']
+                });
+            } catch (error) {
+                console.error(`Failed to inject into tab ${tab.id}:`, error);
+            }
+        }
+    }
 });
 
 chrome.contextMenus.onClicked.addListener((info: chrome.contextMenus.OnClickData, _tab?: chrome.tabs.Tab) => {
