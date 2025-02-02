@@ -3,10 +3,31 @@
     "name": "Clipboard Util",
     "version": "1.0.0",
     "description": "Keep track of your clipboard history",
+    "icons": {
+        "16": "icons/clipboard-16.png",
+        "32": "icons/clipboard-32.png",
+        "48": "icons/clipboard-48.png",
+        "96": "icons/clipboard-96.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "icons/clipboard-16.png",
+            "32": "icons/clipboard-32.png",
+            "48": "icons/clipboard-48.png",
+            "96": "icons/clipboard-96.png"
+        },
+        "default_popup": "index.html"
+    },
     "permissions": [
         "clipboardRead",
         "storage",
-        "contextMenus"
+        "contextMenus",
+        "scripting",
+        "activeTab"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
     ],
     "background": {
         "service_worker": "background.js",
@@ -14,12 +35,9 @@
     },
     "content_scripts": [
         {
-            "matches": ["http://*/*", "https://*/*"],
+            "matches": ["<all_urls>"],
             "js": ["content.js"],
             "run_at": "document_end"
         }
-    ],
-    "action": {
-        "default_popup": "index.html"
-    }
+    ]
 }
